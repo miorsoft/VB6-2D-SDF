@@ -76,7 +76,7 @@ Private WithEvents TimerFPS As cTimer
 Attribute TimerFPS.VB_VarHelpID = -1
 
 Private Sub chkRC_Click()
-    DoRC6 = chkRC = True
+    DoRC6 = chkRC = vbChecked
 
 End Sub
 

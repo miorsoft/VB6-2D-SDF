@@ -90,7 +90,7 @@ Public Function sdSegment(P As tVec2, A As tVec2, B As tVec2, R As Double) As Do
 End Function
 
 Public Function sdSegmentEx(P As tVec2, A As tVec2, B As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As Double
-  ' Faster. Avoid Division: / DOT(BA, BA)
+' Faster. Avoid Division: / DOT(BA, BA)
     Dim PA        As tVec2
     '    Dim BA        As tVec2
     Dim h#
