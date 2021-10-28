@@ -1,5 +1,5 @@
 # VB6-2D SDF
-Draw 2D shapes using 2D Signed distance Field.
+Draw 2D shapes using 2D Signed distance Function.
 
 Calculate distance from each pixel to each shape and compute its RGB value.
 

@@ -130,7 +130,7 @@ Private Sub Timer1_Timer()
 End Sub
 
 Private Sub TimerFPS_Timer()
-    fMain.Caption = "Drawing with Signed Distance Field (SDF)    FPS: " & cnt - FPS & "   Border: " & Border
+    fMain.Caption = "Drawing with Signed Distance Function (SDF)    FPS: " & cnt - FPS & "   Border: " & Border
     FPS = cnt
 End Sub
 
