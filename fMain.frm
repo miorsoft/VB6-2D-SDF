@@ -1,38 +1,65 @@
 VERSION 5.00
 Begin VB.Form fMain 
    Caption         =   "fMain"
-   ClientHeight    =   6225
+   ClientHeight    =   6060
    ClientLeft      =   120
    ClientTop       =   420
-   ClientWidth     =   7980
+   ClientWidth     =   8025
+   BeginProperty Font 
+      Name            =   "Tahoma"
+      Size            =   12
+      Charset         =   0
+      Weight          =   400
+      Underline       =   0   'False
+      Italic          =   0   'False
+      Strikethrough   =   0   'False
+   EndProperty
    LinkTopic       =   "Form1"
-   ScaleHeight     =   415
+   ScaleHeight     =   404
    ScaleMode       =   3  'Pixel
-   ScaleWidth      =   532
+   ScaleWidth      =   535
    StartUpPosition =   1  'CenterOwner
+   Begin VB.CheckBox chkRC 
+      Caption         =   "Render using RC6"
+      Height          =   855
+      Left            =   6240
+      TabIndex        =   2
+      Top             =   4680
+      Width           =   1575
+   End
    Begin VB.VScrollBar VScroll1 
       Height          =   3135
       LargeChange     =   5
-      Left            =   6720
+      Left            =   6480
       Max             =   40
       Min             =   1
       TabIndex        =   1
-      Top             =   360
+      Top             =   120
       Value           =   4
       Width           =   375
    End
    Begin VB.PictureBox PIC 
       Appearance      =   0  'Flat
       BackColor       =   &H80000005&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
       ForeColor       =   &H80000008&
-      Height          =   5655
-      Left            =   360
-      ScaleHeight     =   375
+      Height          =   5535
+      Left            =   120
+      ScaleHeight     =   369
       ScaleMode       =   3  'Pixel
-      ScaleWidth      =   375
+      ScaleWidth      =   369
       TabIndex        =   0
-      Top             =   240
-      Width           =   5655
+      Top             =   120
+      Width           =   5535
    End
 End
 Attribute VB_Name = "fMain"
@@ -47,6 +74,11 @@ Private WithEvents Timer1 As cTimer
 Attribute Timer1.VB_VarHelpID = -1
 Private WithEvents TimerFPS As cTimer
 Attribute TimerFPS.VB_VarHelpID = -1
+
+Private Sub chkRC_Click()
+    DoRC6 = chkRC = True
+
+End Sub
 
 Private Sub Form_Load()
 
@@ -75,6 +107,9 @@ Private Sub Form_Load()
     SceneAddRing vec2(100, 300), 25 - 2, 4
 
 
+    InitByPIC PIC
+
+
     Set Timer1 = New_c.Timer(40, True)
     Set TimerFPS = New_c.Timer(1000, True)
 End Sub
@@ -85,7 +120,12 @@ Private Sub Form_Unload(Cancel As Integer)
 End Sub
 
 Private Sub Timer1_Timer()
-    TESTsdf
+    If DoRC6 Then
+        DrawUsingRC6
+    Else
+        DrawUsingGDI
+    End If
+
     cnt = cnt + 1
 End Sub
 

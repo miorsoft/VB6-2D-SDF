@@ -3,8 +3,8 @@ Option Explicit
 'https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
 
 Public Type tVec2
-    x             As Double
-    y             As Double
+    X             As Double
+    Y             As Double
 End Type
 
 Public Function max(A As Double, B As Double) As Double
@@ -13,12 +13,12 @@ End Function
 Public Function min(A As Double, B As Double) As Double
     If A < B Then min = A Else: min = B
 End Function
-Public Function vec2(x As Double, y As Double) As tVec2
-    vec2.x = x: vec2.y = y
+Public Function vec2(X As Double, Y As Double) As tVec2
+    vec2.X = X: vec2.Y = Y
 End Function
 
 Public Function DOT(v1 As tVec2, v2 As tVec2) As Double
-    DOT = v1.x * v2.x + v1.y * v2.y
+    DOT = v1.X * v2.X + v1.Y * v2.Y
 End Function
 Public Function Clamp01(A As Double) As Double
     Clamp01 = A
@@ -32,13 +32,12 @@ End Function
 
 Public Function Length(v As tVec2) As Double
     With v
-        Length = .x * .x + .y * .y
+        Length = Sqr(.X * .X + .Y * .Y)
     End With
-    Length = Sqr(Length)
 End Function
 Public Function Length2(v As tVec2) As Double
     With v
-        Length2 = .x * .x + .y * .y
+        Length2 = .X * .X + .Y * .Y
     End With
 End Function
 
@@ -79,15 +78,15 @@ Public Function sdSegment(P As tVec2, A As tVec2, B As tVec2, R As Double) As Do
     Dim BA        As tVec2
     Dim h#
     With A
-        PA.x = P.x - .x
-        PA.y = P.y - .y
-        BA.x = B.x - .x
-        BA.y = B.y - .y
+        PA.X = P.X - .X
+        PA.Y = P.Y - .Y
+        BA.X = B.X - .X
+        BA.Y = B.Y - .Y
     End With
     h = Clamp01(DOT(PA, BA) / DOT(BA, BA))
 
-    sdSegment = Length(vec2(PA.x - BA.x * h, _
-                            PA.y - BA.y * h)) - R
+    sdSegment = Length(vec2(PA.X - BA.X * h, _
+                            PA.Y - BA.Y * h)) - R
 End Function
 
 Public Function sdSegmentEx(P As tVec2, A As tVec2, B As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As Double
@@ -95,21 +94,21 @@ Public Function sdSegmentEx(P As tVec2, A As tVec2, B As tVec2, R As Double, BA 
     '    Dim BA        As tVec2
     Dim h#
     With A
-        PA.x = P.x - .x
-        PA.y = P.y - .y
+        PA.X = P.X - .X
+        PA.Y = P.Y - .Y
         '        BA.x = B.x - .x
         '        BA.y = B.y - .y
     End With
     'h = Clamp01(DOT(PA, BA) * InvABlen2)
 
-    h = (PA.x * BA.x + PA.y * BA.y) * InvABlen2
+    h = (PA.X * BA.X + PA.Y * BA.Y) * InvABlen2
     If h > 1# Then
         h = 1#
     ElseIf h < 0# Then
         h = 0#
     End If
     '    sdSegmentEx = Length2(vec2(PA.x - BA.x * h, PA.y - BA.y * h)) - R*R
-    sdSegmentEx = Length(vec2(PA.x - BA.x * h, PA.y - BA.y * h)) - R
+    sdSegmentEx = Length(vec2(PA.X - BA.X * h, PA.Y - BA.Y * h)) - R
 
 End Function
 

@@ -1,10 +1,11 @@
 Type=Exe
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#C:\Windows\System32\stdole2.tlb#OLE Automation
-Reference=*\G{CE4F61C1-7072-4180-9107-B38562AB6ABE}#9e.0#0#..\____PhotoModularFX_0_3\BIN\RC6.dll#RC6
+Reference=*\G{CE4F61C1-7072-4180-9107-B38562AB6ABE}#9e.0#0#..\..\VB6\____PhotoModularFX_0_3\BIN\RC6.dll#RC6
 Form=fMain.frm
 Module=mRC6; mRC6.bas
 Module=m2Dsdf; m2Dsdf.bas
 Module=mSCENE; mSCENE.bas
+Module=mDIB; mDIB.bas
 IconForm="fMain"
 Startup="fMain"
 HelpFile=""

@@ -30,10 +30,11 @@ Public Function SetBorder(v#)
     InvBorder2 = 1 / Border2
 
 End Function
-Public Sub TESTsdf()
+Public Sub DrawUsingRC6()
 
-    Dim x&, y&
-    Dim x4&
+    Dim X&, Y&
+    Dim X40&, X41&, X42&
+
     Dim D#
     CC.SetSourceRGB 0.16, 0.25, 0.16
     CC.Paint
@@ -48,15 +49,17 @@ Public Sub TESTsdf()
                          pH * 0.5 + pH * 0.4 * Cos(T * 0.09 + 2)), _
                          vec2(pW * 0.5 + pW * 0.4 * Cos(T * 0.07 + 3), _
                               pH * 0.5 + pH * 0.4 * Cos(T * 0.05 + 4))
-                              
-                              
+
+
     UpdateRingPos 6, vec2(pW * 0.3 + pW * 0.2 * Cos(T * 0.07), pH * 0.7 + pH * 0.2 * Cos(T * 0.04))
 
-    For x = 0 To pW1
-        x4 = x * 4
-        For y = 0 To pH1
-            D = sdSCENEex(vec2(x * 1, y * 1))
-            If D > 0# Then    ' outside
+    For X = 0 To pW1
+        X40 = X * 4&
+        X41 = X40 + 1&
+        X42 = X40 + 2&
+        For Y = 0 To pH1
+            D = sdSCENEex(vec2(X * 1, Y * 1))
+            If D > 0# Then                       ' outside
                 If D <= Border2 Then
                     '------------------------------------------
                     D = Sqr(D)
@@ -65,15 +68,15 @@ Public Sub TESTsdf()
                     '                    P = D * InvBorder2
                     '------------------------------------------
                     Q = 1# - P
-                    srfBYTES(x4 + 0, y) = 32 * Q + P * srfBYTES(x4 + 0, y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
-                    srfBYTES(x4 + 1, y) = 200 * Q + P * srfBYTES(x4 + 1, y)
-                    srfBYTES(x4 + 2, y) = 255 * Q + P * srfBYTES(x4 + 2, y)
+                    srfBYTES(X40, Y) = 32 * Q + P * srfBYTES(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
+                    srfBYTES(X41, Y) = 200 * Q + P * srfBYTES(X41, Y)
+                    srfBYTES(X42, Y) = 255 * Q + P * srfBYTES(X42, Y)
                     'srfBYTES(x4 + 3, y) = 255
                 End If
-            Else    'inside
-                srfBYTES(x4 + 0, y) = 32
-                srfBYTES(x4 + 1, y) = 200
-                srfBYTES(x4 + 2, y) = 255
+            Else                                 'inside
+                srfBYTES(X40, Y) = 32
+                srfBYTES(X41, Y) = 200
+                srfBYTES(X42, Y) = 255
                 'srfBYTES(x4 + 3, y) = 255
             End If
 
