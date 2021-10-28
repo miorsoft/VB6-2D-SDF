@@ -55,7 +55,7 @@ End Sub
 
 
 Public Sub DrawUsingGDI()
-    Dim X&, Y&, Y2&
+    Dim X&, Y&
     Dim X40&, X41&, X42&
     Dim D#
 
@@ -78,7 +78,6 @@ Public Sub DrawUsingGDI()
         X42 = X40 + 2&
 
         For Y = 0 To pH1
-
 
             BytesBuf(X40, Y) = 41                ' BACKGROUND
             BytesBuf(X41, Y) = 64
