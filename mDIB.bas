@@ -59,7 +59,7 @@ Public Sub DrawUsingGDI()
     Dim X40&, X41&, X42&
     Dim D#
 
-    Dim P#, Q#, T#
+    Dim P#, q#, T#
     T = Timer * 8#
 
     UpdateSegPos 1, vec2(180 + 100 * Cos(T * 0.13), _
@@ -83,7 +83,7 @@ Public Sub DrawUsingGDI()
             BytesBuf(X41, Y) = 64
             BytesBuf(X42, Y) = 41
 
-            D = sdSCENEex(vec2(X * 1, pH1 - Y)) ' << invert Y
+            D = sdSCENEex(vec2(X * 1, pH1 - Y))  ' << invert Y
             If D > 0# Then                       ' outside
                 If D <= Border2 Then
                     '------------------------------------------
@@ -92,10 +92,10 @@ Public Sub DrawUsingGDI()
                     '------------------------------------------
                     '                                        P = D * InvBorder2
                     '------------------------------------------
-                    Q = 1# - P
-                    BytesBuf(X40, Y) = 32 * Q + P * BytesBuf(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
-                    BytesBuf(X41, Y) = 200 * Q + P * BytesBuf(X41, Y)
-                    BytesBuf(X42, Y) = 255 * Q + P * BytesBuf(X42, Y)
+                    q = 1# - P
+                    BytesBuf(X40, Y) = 32 * q + P * BytesBuf(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
+                    BytesBuf(X41, Y) = 200 * q + P * BytesBuf(X41, Y)
+                    BytesBuf(X42, Y) = 255 * q + P * BytesBuf(X42, Y)
                     'BytesBuf(x4 + 3, y) = 255
                 End If
             Else                                 'inside

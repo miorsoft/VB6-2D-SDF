@@ -35,7 +35,7 @@ Begin VB.Form fMain
       Min             =   1
       TabIndex        =   1
       Top             =   120
-      Value           =   4
+      Value           =   1
       Width           =   375
    End
    Begin VB.PictureBox PIC 
@@ -96,11 +96,14 @@ Private Sub Form_Load()
     SetBorder VScroll1
 
     SceneAddSegment vec2(4, 4), vec2(67, 66), 8
-    SceneAddSegment vec2(4, 2), vec2(61, 66), 4
+    'SceneAddSegment vec2(4, 2), vec2(61, 66), 4
+    SceneAddUnevenCapsule vec2(4, 2), vec2(61, 66), 3, 25
 
 
     SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 1 + Rnd * 4
     SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 1 + Rnd * 4
+
+
 
     SceneAddCircle vec2(200, 200), 25
 

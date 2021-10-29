@@ -16,7 +16,16 @@ Public NE         As Long
 
 Public DoRC6      As Long
 
-
+Public Sub SceneAddCircle(A As tVec2, R As Double)
+    NE = NE + 1
+    ReDim Preserve E(NE)
+    With E(NE)
+        .Etype = 0
+        .A = A
+        .R = R
+        .R2 = R * R
+    End With
+End Sub
 Public Sub SceneAddSegment(A As tVec2, B As tVec2, R As Double)
     NE = NE + 1
     ReDim Preserve E(NE)
@@ -31,17 +40,6 @@ Public Sub SceneAddSegment(A As tVec2, B As tVec2, R As Double)
         .InvABlen2 = 1# / Length2(vec2(B.X - A.X, B.Y - A.Y))    '/ DOT(BA, BA))
     End With
 End Sub
-
-Public Sub SceneAddCircle(A As tVec2, R As Double)
-    NE = NE + 1
-    ReDim Preserve E(NE)
-    With E(NE)
-        .Etype = 0
-        .A = A
-        .R = R
-        .R2 = R * R
-    End With
-End Sub
 Public Sub SceneAddRing(A As tVec2, R As Double, Thick As Double)
     NE = NE + 1
     ReDim Preserve E(NE)
@@ -53,7 +51,20 @@ Public Sub SceneAddRing(A As tVec2, R As Double, Thick As Double)
         .R2 = R * R
     End With
 End Sub
-
+Public Sub SceneAddUnevenCapsule(A As tVec2, B As tVec2, Ra As Double, Rb As Double)
+    NE = NE + 1
+    ReDim Preserve E(NE)
+    With E(NE)
+        .Etype = 3
+        .A = A
+        .B = B
+        .BA.X = B.X - A.X
+        .BA.Y = B.Y - A.Y
+        .R = Ra
+        .R2 = Rb
+        .InvABlen2 = 1# / Length2(vec2(B.X - A.X, B.Y - A.Y))    '/ DOT(BA, BA))
+    End With
+End Sub
 Public Sub UpdateSegPos(wE As Long, A As tVec2, B As tVec2)
     With E(wE)
         .A = A
@@ -85,11 +96,12 @@ Public Function sdSCENEex(P As tVec2) As Double
             Select Case .Etype
             Case 0&                              'CIRCLE
                 D = Length(vec2(.A.X - P.X, .A.Y - P.Y)) - .R
-            Case 1&                              'SEGMENT
+            Case 1&                              'SEGMENT / capsule
                 D = sdSegmentEx(P, .A, .B, .R, .BA, .InvABlen2)
             Case 2&                              ' RING
                 D = Abs(Length(vec2(.A.X - P.X, .A.Y - P.Y)) - .R) - .thickness
-
+            Case 3&                              'Uneven capsule
+                D = sdUnevenCapsuleEx(P, .A, .B, .R, .BA, .InvABlen2, .R2)
             End Select
             'If D > 0 Then D = Sqr(D)
         End With

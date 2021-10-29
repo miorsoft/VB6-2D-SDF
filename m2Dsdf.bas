@@ -119,3 +119,65 @@ End Function
 ''End Function
 
 
+''https://www.shadertoy.com/view/4lcBWn
+''float sdUnevenCapsule( in vec2 p, in vec2 pa, in vec2 pb, in float ra, in float rb )
+''{
+''p  -= pa;
+''pb -= pa;
+''float h = dot(pb,pb);
+''vec2  q = vec2( dot(p,vec2(pb.y,-pb.x)), dot(p,pb) )/h;
+''
+''//-----------
+''
+''q.x = abs(q.x);
+''
+''float b = ra-rb;
+''vec2  c = vec2(sqrt(h-b*b),b);
+''
+''float k = cro(c,q);
+''float m = dot(c,q);
+''float n = dot(q,q);
+''
+''if( k < 0.0 ) return sqrt(h*(n            )) - ra;
+''else if( k > c.x ) return sqrt(h*(n+1.0-2.0*q.y)) - rb;
+''return m                       - ra;
+Public Function sdUnevenCapsuleEx(P As tVec2, A As tVec2, B As tVec2, Ra As Double, BA As tVec2, InvABlen2 As Double, Rb#) As Double
+    Dim h#, DeltaR#, ih#
+    Dim tP        As tVec2
+    Dim tB        As tVec2
+    Dim q         As tVec2
+    Dim k#, m#, n#
+    Dim c         As tVec2
+
+With A
+    tP.X = P.X - .X
+    tP.Y = P.Y - .Y
+    tB.X = B.X - .X
+    tB.Y = B.Y - .Y
+End With
+
+    h = tB.X * tB.X + tB.Y * tB.Y: ih = 1# / h
+    q = vec2(DOT(tP, vec2(tB.Y, -tB.X)), DOT(tP, tB))
+    q.X = Abs(q.X * ih)
+    q.Y = q.Y * ih
+
+    DeltaR = Ra - Rb
+    If h - DeltaR * DeltaR > 0# Then
+        c = vec2(Sqr(h - DeltaR * DeltaR), DeltaR)
+    Else
+        c.Y = DeltaR
+    End If
+
+    k = c.X * q.Y - c.Y * q.X                    'cro(c, q)   '2D cross
+    m = DOT(c, q)
+    n = DOT(q, q)
+
+    If (k < 0#) Then
+        sdUnevenCapsuleEx = Sqr(h * (n)) - Ra
+    ElseIf (k > c.X) Then
+        sdUnevenCapsuleEx = Sqr(h * (n + 1# - 2# * q.Y)) - Rb
+    Else
+        sdUnevenCapsuleEx = m - Ra
+    End If
+
+End Function

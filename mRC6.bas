@@ -40,7 +40,7 @@ Public Sub DrawUsingRC6()
     CC.Paint
     SRF.BindToArray srfBYTES()
 
-    Dim P#, Q#, T#
+    Dim P#, q#, T#
     T = Timer * 8#
 
     UpdateSegPos 1, vec2(180 + 100 * Cos(T * 0.13), _
@@ -67,10 +67,10 @@ Public Sub DrawUsingRC6()
                     '------------------------------------------
                     '                    P = D * InvBorder2
                     '------------------------------------------
-                    Q = 1# - P
-                    srfBYTES(X40, Y) = 32 * Q + P * srfBYTES(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
-                    srfBYTES(X41, Y) = 200 * Q + P * srfBYTES(X41, Y)
-                    srfBYTES(X42, Y) = 255 * Q + P * srfBYTES(X42, Y)
+                    q = 1# - P
+                    srfBYTES(X40, Y) = 32 * q + P * srfBYTES(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
+                    srfBYTES(X41, Y) = 200 * q + P * srfBYTES(X41, Y)
+                    srfBYTES(X42, Y) = 255 * q + P * srfBYTES(X42, Y)
                     'srfBYTES(x4 + 3, y) = 255
                 End If
             Else                                 'inside
