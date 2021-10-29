@@ -57,7 +57,7 @@ End Sub
 Public Sub DrawUsingGDI()
     Dim X&, Y&
     Dim X40&, X41&, X42&
-    Dim D#
+    Dim D         As tVec3
 
     Dim P#, Q#, T#
     T = Timer * 8#
@@ -83,26 +83,24 @@ Public Sub DrawUsingGDI()
             BytesBuf(X41, Y) = 64
             BytesBuf(X42, Y) = 41
 
-            D = sdSCENEex(vec2(X * 1, pH1 - Y))  ' << invert Y
-            If D > 0# Then                       ' outside
-                If D <= Border2 Then
+            D = sdgSCENEex(vec2(X * 1, pH1 - Y))    ' << invert Y
+            If D.X > 0# Then                     ' outside
+                If D.X <= Border2 Then
                     '------------------------------------------
-                    D = Sqr(D)
-                    P = D * InvBorder
+                    D.X = Sqr(D.X)
+                    P = D.X * InvBorder
                     '------------------------------------------
                     '                                        P = D * InvBorder2
                     '------------------------------------------
                     Q = 1# - P
-                    BytesBuf(X40, Y) = 32 * Q + P * BytesBuf(X40, Y)    '255 * (0.5 + 0.5 * Cos(D * 0.5))
-                    BytesBuf(X41, Y) = 200 * Q + P * BytesBuf(X41, Y)
-                    BytesBuf(X42, Y) = 255 * Q + P * BytesBuf(X42, Y)
-                    'BytesBuf(x4 + 3, y) = 255
+                    BytesBuf(X40, Y) = 255 * Q * (0.5 + 0.5 * D.Y) + P * BytesBuf(X40, Y)
+                    BytesBuf(X41, Y) = 255 * Q * (0.5 + 0.5 * D.Z) + P * BytesBuf(X41, Y)
+                    BytesBuf(X42, Y) = 200 * Q + P * BytesBuf(X42, Y)
                 End If
             Else                                 'inside
-                BytesBuf(X40, Y) = 32
-                BytesBuf(X41, Y) = 200
-                BytesBuf(X42, Y) = 255
-                'BytesBuf(x4 + 3, y) = 255
+                BytesBuf(X40, Y) = 255 * (0.5 + 0.5 * D.Y)
+                BytesBuf(X41, Y) = 255 * (0.5 + 0.5 * D.Z)
+                BytesBuf(X42, Y) = 200
             End If
 
         Next

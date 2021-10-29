@@ -7,6 +7,10 @@ Do not use (DX) GPU HLSL, with which it would be very much faster.
 
 2D SDF functions taken and customized from here:
 https://iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm
+and
+2D distance and gradient functions
+https://iquilezles.org/www/articles/distgradfunctions2d/distgradfunctions2d.htm
+
 
 __Requires__:
    RC6 (for RC6 Render mode) http://vbrichclient.com/#/en/About/
