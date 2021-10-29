@@ -143,21 +143,19 @@ End Function
 ''return m                       - ra;
 Public Function sdUnevenCapsuleEx(P As tVec2, A As tVec2, B As tVec2, Ra As Double, BA As tVec2, InvABlen2 As Double, Rb#) As Double
     Dim h#, DeltaR#, ih#
-    Dim tP        As tVec2
-    Dim tB        As tVec2
+    Dim PA        As tVec2
+
     Dim q         As tVec2
     Dim k#, m#, n#
     Dim c         As tVec2
 
-With A
-    tP.X = P.X - .X
-    tP.Y = P.Y - .Y
-    tB.X = B.X - .X
-    tB.Y = B.Y - .Y
-End With
+    With A
+        PA.X = P.X - .X
+        PA.Y = P.Y - .Y
+    End With
 
-    h = tB.X * tB.X + tB.Y * tB.Y: ih = 1# / h
-    q = vec2(DOT(tP, vec2(tB.Y, -tB.X)), DOT(tP, tB))
+    h = BA.X * BA.X + BA.Y * BA.Y: ih = 1# / h
+    q = vec2(DOT(PA, vec2(BA.Y, -BA.X)), DOT(PA, BA))
     q.X = Abs(q.X * ih)
     q.Y = q.Y * ih
 
