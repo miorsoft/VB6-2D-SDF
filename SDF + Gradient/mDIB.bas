@@ -29,6 +29,8 @@ Private Declare Function GetDIBits Lib "gdi32" (ByVal aHDC As Long, ByVal hBitma
 Private meWidth   As Long
 Private meHeight  As Long
 
+Private Color As tVec3
+
 
 Public Sub InitByPIC(PIC As PictureBox)
 
@@ -98,9 +100,17 @@ Public Sub DrawUsingGDI()
                     BytesBuf(X42, Y) = 200 * Q + P * BytesBuf(X42, Y)
                 End If
             Else                                 'inside
-                BytesBuf(X40, Y) = 255 * (0.5 + 0.5 * D.Y)
-                BytesBuf(X41, Y) = 255 * (0.5 + 0.5 * D.Z)
-                BytesBuf(X42, Y) = 200
+            
+     Color = vec3(1, 0.5, 0.8)
+  If D.X Then Color = ADD3(Color, Clamp01(DOT3(vec3(-1, -1, 1), vec3(D.Y, D.Z, 8 / D.X))))
+                BytesBuf(X40, Y) = Clamp01(Color.X) * 255
+                BytesBuf(X41, Y) = Clamp01(Color.Y) * 255
+                BytesBuf(X42, Y) = Clamp01(Color.Z) * 255
+                
+                
+'                BytesBuf(X40, Y) = 255 * (0.5 + 0.5 * D.Y)
+'                BytesBuf(X41, Y) = 255 * (0.5 + 0.5 * D.Z)
+'                BytesBuf(X42, Y) = 200
             End If
 
         Next

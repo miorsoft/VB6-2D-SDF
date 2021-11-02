@@ -13,14 +13,14 @@ Public Type tVec3
     Z             As Double
 End Type
 
-Public Function max(a As Double, b As Double) As Double
-    If a > b Then max = a Else: max = b
+Public Function max(A As Double, b As Double) As Double
+    If A > b Then max = A Else: max = b
 End Function
-Public Function min(a As Double, b As Double) As Double
-    If a < b Then min = a Else: min = b
+Public Function min(A As Double, b As Double) As Double
+    If A < b Then min = A Else: min = b
 End Function
-Public Function mix(a As Double, b As Double, v#) As Double
-    mix = a * (1# - v#) + b * v
+Public Function mix(A As Double, b As Double, v#) As Double
+    mix = A * (1# - v#) + b * v
 End Function
 Public Function vec2(X As Double, Y As Double) As tVec2
     vec2.X = X: vec2.Y = Y
@@ -37,9 +37,19 @@ End Function
 Public Function DOT3(v1 As tVec3, v2 As tVec3) As Double
     DOT3 = v1.X * v2.X + v1.Y * v2.Y + v1.Z * v2.Z
 End Function
+Public Function SUM3(v1 As tVec3, v2 As tVec3) As tVec3
+SUM3.X = v1.X + v2.X
+SUM3.Y = v1.Y + v2.Y
+SUM3.Z = v1.Z + v2.Z
+End Function
+Public Function ADD3(v1 As tVec3, A As Double) As tVec3
+ADD3.X = v1.X + A
+ADD3.Y = v1.Y + A
+ADD3.Z = v1.Z + A
+End Function
 
-Public Function Clamp01(a As Double) As Double
-    Clamp01 = a
+Public Function Clamp01(A As Double) As Double
+    Clamp01 = A
     If Clamp01 < 0# Then
         Clamp01 = 0#
     ElseIf Clamp01 > 1# Then
@@ -79,11 +89,11 @@ End Function
 ''float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
 ''return V2Length( pa - ba*h );
 ''}
-Public Function sdSegment(P As tVec2, a As tVec2, b As tVec2, R As Double) As Double
+Public Function sdSegment(P As tVec2, A As tVec2, b As tVec2, R As Double) As Double
     Dim PA        As tVec2
     Dim BA        As tVec2
     Dim h#
-    With a
+    With A
         PA.X = P.X - .X
         PA.Y = P.Y - .Y
         BA.X = b.X - .X
@@ -95,12 +105,12 @@ Public Function sdSegment(P As tVec2, a As tVec2, b As tVec2, R As Double) As Do
                               PA.Y - BA.Y * h)) - R
 End Function
 
-Public Function sdSegmentEx(P As tVec2, a As tVec2, b As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As Double
+Public Function sdSegmentEx(P As tVec2, A As tVec2, b As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As Double
 ' Faster. Avoid Division: / DOT(BA, BA)
     Dim PA        As tVec2
     '    Dim BA        As tVec2
     Dim h#
-    With a
+    With A
         PA.X = P.X - .X
         PA.Y = P.Y - .Y
         '        BA.x = B.x - .x
@@ -118,7 +128,7 @@ Public Function sdSegmentEx(P As tVec2, a As tVec2, b As tVec2, R As Double, BA 
     sdSegmentEx = V2Length(vec2(PA.X - BA.X * h, PA.Y - BA.Y * h)) - R
 
 End Function
-Public Function sdgSegmentEx(P As tVec2, a As tVec2, b As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As tVec3
+Public Function sdgSegmentEx(P As tVec2, A As tVec2, b As tVec2, R As Double, BA As tVec2, InvABlen2 As Double) As tVec3
 ' Faster. Avoid Division: / DOT(BA, BA)
     Dim PA        As tVec2
     '    Dim BA        As tVec2
@@ -126,7 +136,7 @@ Public Function sdgSegmentEx(P As tVec2, a As tVec2, b As tVec2, R As Double, BA
     Dim Q         As tVec2
     Dim D#, iD#
 
-    With a
+    With A
         PA.X = P.X - .X
         PA.Y = P.Y - .Y
     End With
@@ -190,7 +200,7 @@ End Function
 ''if( k < 0.0 ) return sqrt(h*(n            )) - ra;
 ''else if( k > c.x ) return sqrt(h*(n+1.0-2.0*q.y)) - rb;
 ''return m                       - ra;
-Public Function sdUnevenCapsuleEx(P As tVec2, a As tVec2, b As tVec2, Ra As Double, BA As tVec2, InvABlen2 As Double, Rb#) As Double
+Public Function sdUnevenCapsuleEx(P As tVec2, A As tVec2, b As tVec2, Ra As Double, BA As tVec2, InvABlen2 As Double, Rb#) As Double
     Dim h#, DeltaR#, ih#
     Dim PA        As tVec2
 
@@ -198,7 +208,7 @@ Public Function sdUnevenCapsuleEx(P As tVec2, a As tVec2, b As tVec2, Ra As Doub
     Dim K#, m#, n#
     Dim c         As tVec2
 
-    With a
+    With A
         PA.X = P.X - .X
         PA.Y = P.Y - .Y
     End With
@@ -239,18 +249,18 @@ End Function
 '    return vec3( min(a.x,  b.x) - m,
 '                 mix(a.yz, b.yz, (a.x<b.x)?n:1.0-n) );
 '}
-Public Function sdgSmoothMin(a As tVec3, b As tVec3, K#, iK#) As tVec3
+Public Function sdgSmoothMin(A As tVec3, b As tVec3, K#, iK#) As tVec3
     Dim h#, m#, n#
-    h = K - Abs(a.X - b.X): If h < 0# Then h = 0#
+    h = K - Abs(A.X - b.X): If h < 0# Then h = 0#
     m = 0.25 * h * h * iK
     n = 0.5 * h * iK
-    If a.X < b.X Then
-        sdgSmoothMin = vec3(min(a.X, b.X) - m, _
-                            mix(a.Y, b.Y, n), _
-                            mix(a.Z, b.Z, n))
+    If A.X < b.X Then
+        sdgSmoothMin = vec3(min(A.X, b.X) - m, _
+                            mix(A.Y, b.Y, n), _
+                            mix(A.Z, b.Z, n))
     Else
-        sdgSmoothMin = vec3(min(a.X, b.X) - m, _
-                            mix(b.Y, a.Y, n), _
-                            mix(b.Z, a.Z, n))
+        sdgSmoothMin = vec3(min(A.X, b.X) - m, _
+                            mix(b.Y, A.Y, n), _
+                            mix(b.Z, A.Z, n))
     End If
 End Function

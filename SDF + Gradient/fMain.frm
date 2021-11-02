@@ -95,13 +95,13 @@ Private Sub Form_Load()
     '''    srfBIND
     SetBorder VScroll1
 
-    SceneAddSegment vec2(4, 4), vec2(67, 66), 8
-    SceneAddSegment vec2(4, 2), vec2(61, 66), 4
+    SceneAddSegment vec2(4, 4), vec2(67, 66), 12 ' 8
+    SceneAddSegment vec2(4, 2), vec2(61, 66), 10 ' 4
     'SceneAddUnevenCapsule vec2(4, 2), vec2(61, 66), 3, 25
 
 
-    SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 1 + Rnd * 4
-    SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 1 + Rnd * 4
+    SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 4 + Rnd * 5
+    SceneAddSegment vec2(Rnd * pW, Rnd * pH), vec2(Rnd * pW, Rnd * pH), 4 + Rnd * 5
 
 
 
